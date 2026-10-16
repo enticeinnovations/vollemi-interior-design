@@ -166,7 +166,7 @@ function Contact() {
               <div className="contact-detail-main">
 
                 <h3>
-                  Bangaloer . Hosur . Nagercoil
+                  Bangalore . Hosur . Nagercoil
                 </h3>
 
               </div>
