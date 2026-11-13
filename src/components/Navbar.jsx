@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import "./Navbar.css";
 import logo from "../assets/vollimelogo.png";
@@ -10,6 +11,28 @@ function Navbar() {
     setMenuOpen(false);
   };
 
+  // Navigate without showing # in the URL
+  const navigateToSection = (e, sectionId) => {
+    e.preventDefault();
+
+    closeMenu();
+
+    const section = document.getElementById(sectionId);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    window.history.replaceState(
+      null,
+      "",
+      window.location.pathname + window.location.search
+    );
+  };
+
   useEffect(() => {
     const checkNavbarBackground = () => {
       const navbar = document.querySelector(".navbar");
@@ -18,7 +41,6 @@ function Navbar() {
 
       const navbarRect = navbar.getBoundingClientRect();
 
-      // Dark sections where navbar should switch to dark glass
       const darkSections = document.querySelectorAll(
         "#philosophy, #contact"
       );
@@ -59,43 +81,35 @@ function Navbar() {
 
       {/* LOGO */}
       <a
-        href="#home"
+        href="/"
         className="navbar-logo"
-        onClick={closeMenu}
+        onClick={(e) => navigateToSection(e, "home")}
       >
-        <img
-          src={logo}
-          alt="Vollemi Interior Design"
-        />
+        <img src={logo} alt="Vollemi Interior Design" />
       </a>
 
       {/* DESKTOP NAVIGATION */}
       <nav className="nav-links">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        
-        <a href="#services">Services</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="/" onClick={(e) => navigateToSection(e, "home")}>Home</a>
+        <a href="/" onClick={(e) => navigateToSection(e, "about")}>About</a>
+        <a href="/" onClick={(e) => navigateToSection(e, "services")}>Services</a>
+        <a href="/" onClick={(e) => navigateToSection(e, "projects")}>Projects</a>
+        <a href="/" onClick={(e) => navigateToSection(e, "contact")}>Contact</a>
       </nav>
 
       {/* DESKTOP TALK BUTTON */}
       <a
-        href="#contact"
+        href="/"
         className="nav-button"
+        onClick={(e) => navigateToSection(e, "contact")}
       >
         <span>Let's Talk</span>
-
-        <span className="nav-button-arrow">
-          ↗
-        </span>
+        <span className="nav-button-arrow">↗</span>
       </a>
 
       {/* MOBILE MENU BUTTON */}
       <button
-        className={`menu-button ${
-          menuOpen ? "active" : ""
-        }`}
+        className={`menu-button ${menuOpen ? "active" : ""}`}
         onClick={() => setMenuOpen(!menuOpen)}
         aria-label="Toggle navigation menu"
         aria-expanded={menuOpen}
@@ -106,43 +120,38 @@ function Navbar() {
       </button>
 
       {/* MOBILE NAVIGATION */}
-      <nav
-        className={`mobile-menu ${
-          menuOpen ? "open" : ""
-        }`}
-      >
-        <a href="#home" onClick={closeMenu}>
+      <nav className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+
+        <a href="/" onClick={(e) => navigateToSection(e, "home")}>
           Home
         </a>
 
-        <a href="#about" onClick={closeMenu}>
+        <a href="/" onClick={(e) => navigateToSection(e, "about")}>
           About
         </a>
 
-   
-
-        <a href="#services" onClick={closeMenu}>
+        <a href="/" onClick={(e) => navigateToSection(e, "services")}>
           Services
         </a>
 
-        <a href="#projects" onClick={closeMenu}>
+        <a href="/" onClick={(e) => navigateToSection(e, "projects")}>
           Projects
         </a>
 
-        <a href="#contact" onClick={closeMenu}>
+        <a href="/" onClick={(e) => navigateToSection(e, "contact")}>
           Contact
         </a>
 
         <a
-          href="#contact"
+          href="/"
           className="mobile-talk"
-          onClick={closeMenu}
+          onClick={(e) => navigateToSection(e, "contact")}
         >
           <span>Let's Talk</span>
           <span>↗</span>
         </a>
-      </nav>
 
+      </nav>
     </header>
   );
 }
